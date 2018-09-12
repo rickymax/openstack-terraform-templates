@@ -79,8 +79,8 @@ resource "openstack_networking_subnet_v2" "mgmt__subnet" {
   ip_version       = 4
   name             = "mgmt__subnet"
   allocation_pools = {
-    start = "10.0.0.200"
-    end   = "10.0.0.254"
+    start = "10.0.0.10"
+    end   = "10.0.0.100"
   }
   gateway_ip       = "10.0.0.1"
   enable_dhcp      = "true"
