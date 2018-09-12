@@ -75,14 +75,14 @@ resource "openstack_networking_network_v2" "mgmt" {
 resource "openstack_networking_subnet_v2" "mgmt__subnet" {
   region           = "${var.region_name}"
   network_id       = "${openstack_networking_network_v2.mgmt.id}"
-  cidr             = "10.2.0.0/24"
+  cidr             = "10.0.0.0/20"
   ip_version       = 4
   name             = "mgmt__subnet"
   allocation_pools = {
-    start = "10.2.0.200"
-    end   = "10.2.0.254"
+    start = "10.0.0.200"
+    end   = "10.0.0.254"
   }
-  gateway_ip       = "10.2.0.1"
+  gateway_ip       = "10.0.0.1"
   enable_dhcp      = "true"
   dns_nameservers  = ["${compact(split(",",var.dns_nameservers))}"]
 }
