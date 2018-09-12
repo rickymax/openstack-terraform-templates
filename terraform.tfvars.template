@@ -1,0 +1,23 @@
+auth_url = "<auth_url>"
+domain_name = "<domain_name>"
+user_name = "<ostack_user>"
+password = "<ostack_pw>"
+tenant_name = "<ostack_tenant_name>"
+region_name = "<region_name>"
+availability_zone = "<availability_zone>"
+
+ext_net_name = "<ext_net_name>"
+ext_net_id = "<ext_net_id>"
+
+# in case your OpenStack needs custom nameservers
+# dns_nameservers = 8.8.8.8
+
+# Disambiguate keypairs with this suffix
+# keypair_suffix = "<keypair_suffix>"
+
+# Disambiguate security groups with this suffix
+# security_group_suffix = "<security_group_suffix>"
+
+# in case of self signed certificate select one of the following options
+# cacert_file = "<path-to-certificate>"
+# insecure = "true"
