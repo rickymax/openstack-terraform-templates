@@ -327,3 +327,93 @@ output "net_id_cf" {
 output "security group to be assigned to BOSH vm" {
   value = "${openstack_networking_secgroup_v2.wise_sec_group.name}"
 }
+
+# flavor
+# note: attributes such as ephemeral and "extra" fields are not yet supported
+resource "openstack_compute_flavor_v2" "minimal-lowmem" {
+  name  = "minimal-lowmem"
+  ram   = "2048"
+  vcpus = "1"
+  disk  = "13"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "minimal" {
+  name  = "minimal"
+  ram   = "4096"
+  vcpus = "1"
+  disk  = "13"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "small-lowmem" {
+  name  = "small-lowmem"
+  ram   = "4096"
+  vcpus = "2"
+  disk  = "13"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "small" {
+  name  = "small"
+  ram   = "8192"
+  vcpus = "2"
+  disk  = "19"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "small-highmem" {
+  name  = "small-highmem"
+  ram   = "16384"
+  vcpus = "2"
+  disk  = "35"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "medium-lowmem" {
+  name  = "medium-lowmem"
+  ram   = "8192"
+  vcpus = "4"
+  disk  = "19"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "medium" {
+  name  = "medium"
+  ram   = "16384"
+  vcpus = "4"
+  disk  = "35"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "medium-highmem" {
+  name  = "medium-highmem"
+  ram   = "32768"
+  vcpus = "4"
+  disk  = "67"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "large" {
+  name  = "large"
+  ram   = "32768"
+  vcpus = "8"
+  disk  = "67"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "small-50GB-ephemeral-disk" {
+  name  = "small-50GB-ephemeral-disk"
+  ram   = "8192"
+  vcpus = "2"
+  disk  = "53"
+  is_public = "true"
+}
+
+resource "openstack_compute_flavor_v2" "medium-highmem-100GB-ephemeral-disk" {
+  name  = "medium-highmem-100GB-ephemeral-disk"
+  ram   = "32768"
+  vcpus = "4"
+  disk  = "103"
+  is_public = "true"
+}
