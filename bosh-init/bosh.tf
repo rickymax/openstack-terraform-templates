@@ -156,10 +156,10 @@ resource "openstack_compute_keypair_v2" "bosh" {
 resource "openstack_networking_secgroup_v2" "secgroup" {
   region = "${var.region_name}"
   name = "bosh${var.security_group_suffix}"
-  description = "BOSH Security Group"
+  description = "BOSH security group"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_1" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_self" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
@@ -168,7 +168,7 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_1" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_2" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_22" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
@@ -179,7 +179,7 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_2" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_3" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_6868" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
@@ -190,7 +190,7 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_3" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_4" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_8443" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
@@ -201,7 +201,7 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_4" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_5" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_8844" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
@@ -212,7 +212,7 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_5" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_6" {
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_25555" {
   region = "${var.region_name}"
   direction = "ingress"
   ethertype = "IPv4"
