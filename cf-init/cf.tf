@@ -82,6 +82,28 @@ resource "openstack_networking_subnet_v2" "cf__subnet" {
   dns_nameservers = "${var.dns_nameservers}"
 }
 
+resource "openstack_networking_network_v2" "db_net" {
+  region         = "${var.region_name}"
+  name           = "db-service"
+  admin_state_up = "true"
+}
+
+resource "openstack_networking_subnet_v2" "db__subnet" {
+  region           = "${var.region_name}"
+  network_id       = "${openstack_networking_network_v2.db_net.id}"
+  cidr             = "10.100.0.0/16"
+  ip_version       = 4
+  name             = "db__subnet"
+  allocation_pools = {
+    start = "10.100.0.10"
+    end   = "10.100.0.100"
+  }
+  gateway_ip       = "10.100.0.1"
+  enable_dhcp      = "true"
+  dns_nameservers  = "${var.dns_nameservers}"
+}
+
+
 resource "openstack_networking_secgroup_v2" "wise_sec_group" {
   region      = "${var.region_name}"
   name        = "WISE-PaaS-nsg"
