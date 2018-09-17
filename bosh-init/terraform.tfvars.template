@@ -9,6 +9,8 @@ availability_zone = "<availability_zone>"
 ext_net_name = "<ext_net_name>"
 ext_net_id = "<ext_net_id>"
 
+use_fuel_deploy = "<true or false>" #default is true
+
 # in case your OpenStack needs custom nameservers
 # dns_nameservers = 8.8.8.8
 
