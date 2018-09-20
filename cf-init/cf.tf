@@ -103,6 +103,25 @@ resource "openstack_networking_subnet_v2" "db__subnet" {
   dns_nameservers  = "${var.dns_nameservers}"
 }
 
+resource "openstack_networking_network_v2" "rmq_net" {
+  region         = "${var.region_name}"
+  name           = "rabbitmq-service"
+  admin_state_up = "true"
+}
+
+resource "openstack_networking_subnet_v2" "rmq__subnet" {
+  region           = "${var.region_name}"
+  network_id       = "${openstack_networking_network_v2.rmq_net.id}"
+  cidr             = "10.10.0.0/16"
+  ip_version       = 4
+  name             = "rabbitmq__subnet"
+  allocation_pools = {
+    start = "10.10.0.10"
+    end   = "10.10.0.100"
+  }
+  gateway_ip       = "10.10.0.1"
+  enable_dhcp      = "true"
+  dns_nameservers  = "${var.dns_nameservers}"
 
 resource "openstack_networking_secgroup_v2" "wise_sec_group" {
   region      = "${var.region_name}"
@@ -339,6 +358,18 @@ resource "openstack_networking_router_interface_v2" "cf_router_interface" {
   count = "${length(var.availability_zones)}"
   router_id = "${var.bosh_router_id}"
   subnet_id = "${element(openstack_networking_subnet_v2.cf__subnet.*.id, count.index)}"
+  region = "${var.region_name}"
+}
+
+resource "openstack_networking_router_interface_v2" "db_router_interface" {
+  router_id = "${var.bosh_router_id}"
+  subnet_id = "${openstack_networking_subnet_v2.db__subnet.id}"
+  region = "${var.region_name}"
+}
+
+resource "openstack_networking_router_interface_v2" "rmq_router_interface" {
+  router_id = "${var.bosh_router_id}"
+  subnet_id = "${openstack_networking_subnet_v2.rmq__subnet.id}"
   region = "${var.region_name}"
 }
 
