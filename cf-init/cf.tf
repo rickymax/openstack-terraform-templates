@@ -64,12 +64,6 @@ resource "openstack_networking_network_v2" "cf_net" {
   region         = "${var.region_name}"
   name           = "cf${count.index+1}"
   admin_state_up = "true"
-
-  provisioner "local-exec" {
-    command = <<EOF
-      echo net_id_cf${count.index+1}: ${openstack_networking_network_v2.cf_net.*.id} >> ../terraform-vars.yml
-    EOF
-  }
 }
 
 resource "openstack_networking_subnet_v2" "cf__subnet" {
@@ -95,6 +89,9 @@ resource "openstack_networking_network_v2" "db_net" {
 
   provisioner "local-exec" {
     command = <<EOF
+      echo net_id_cf1: ${openstack_networking_network_v2.cf_net.0.id} >> ../terraform-vars.yml
+      echo net_id_cf2: ${openstack_networking_network_v2.cf_net.1.id} >> ../terraform-vars.yml
+      echo net_id_cf3: ${openstack_networking_network_v2.cf_net.2.id} >> ../terraform-vars.yml
       echo net_id_db: ${openstack_networking_network_v2.db_net.id} >> ../terraform-vars.yml
     EOF
   }
