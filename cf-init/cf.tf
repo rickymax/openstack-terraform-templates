@@ -64,6 +64,12 @@ resource "openstack_networking_network_v2" "cf_net" {
   region         = "${var.region_name}"
   name           = "cf${count.index+1}"
   admin_state_up = "true"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo net_id_cf${count.index+1}: ${openstack_networking_network_v2.cf_net.*.id} >> ../terraform-vars.yml
+    EOF
+  }
 }
 
 resource "openstack_networking_subnet_v2" "cf__subnet" {
@@ -86,6 +92,12 @@ resource "openstack_networking_network_v2" "db_net" {
   region         = "${var.region_name}"
   name           = "db-service"
   admin_state_up = "true"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo net_id_db: ${openstack_networking_network_v2.db_net.id} >> ../terraform-vars.yml
+    EOF
+  }
 }
 
 resource "openstack_networking_subnet_v2" "db__subnet" {
@@ -107,6 +119,12 @@ resource "openstack_networking_network_v2" "rmq_net" {
   region         = "${var.region_name}"
   name           = "rabbitmq-service"
   admin_state_up = "true"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo net_id_rmq: ${openstack_networking_network_v2.rmq_net.id} >> ../terraform-vars.yml
+    EOF
+  }
 }
 
 resource "openstack_networking_subnet_v2" "rmq__subnet" {
@@ -386,6 +404,14 @@ resource "openstack_networking_router_interface_v2" "rmq_router_interface" {
 
 output "net_id_cf" {
   value = "${openstack_networking_network_v2.cf_net.*.id}"
+}
+
+output "net_id_rmq" {
+  value = "${openstack_networking_network_v2.rmq_net.id}"
+}
+
+output "net_id_db" {
+  value = "${openstack_networking_network_v2.db_net.id}"
 }
 
 output "security group to be assigned to BOSH vm" {
