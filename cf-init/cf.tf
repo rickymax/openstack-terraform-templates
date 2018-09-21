@@ -481,3 +481,49 @@ resource "openstack_compute_flavor_v2" "medium-highmem-100GB-ephemeral-disk" {
   disk  = "103"
   is_public = "true"
 }
+
+# floating ips
+resource "openstack_networking_floatingip_v2" "cf_haproxy_public_ip" {
+  region = "${var.region_name}"
+  pool   = "${var.ext_net_name}"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo cf_haproxy_public_ip: ${openstack_networking_floatingip_v2.cf_haproxy_public_ip.address} >> ../terraform-vars.yml
+    EOF
+  }
+}
+
+resource "openstack_networking_floatingip_v2" "rabbitmq_haproxy_public_ip" {
+  region = "${var.region_name}"
+  pool   = "${var.ext_net_name}"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo rabbitmq_haproxy_public_ip: ${openstack_networking_floatingip_v2.rabbitmq_haproxy_public_ip.address} >> ../terraform-vars.yml
+    EOF
+  }
+}
+
+resource "openstack_networking_floatingip_v2" "prometheus_nginx_public_ip" {
+  region = "${var.region_name}"
+  pool   = "${var.ext_net_name}"
+
+  provisioner "local-exec" {
+    command = <<EOF
+      echo prometheus_nginx_public_ip: ${openstack_networking_floatingip_v2.prometheus_nginx_public_ip.address} >> ../terraform-vars.yml
+    EOF
+  }
+}
+
+output "cf_haproxy_external_ip" {
+  value = "${openstack_networking_floatingip_v2.cf_haproxy_public_ip.address}"
+}
+
+output "rabbitmq_haproxy_external_ip" {
+  value = "${openstack_networking_floatingip_v2.rabbitmq_haproxy_public_ip.address}"
+}
+
+output "prometheus_nginx_external_ip" {
+  value = "${openstack_networking_floatingip_v2.prometheus_nginx_public_ip.address}"
+}

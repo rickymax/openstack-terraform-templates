@@ -78,7 +78,7 @@ resource "openstack_networking_network_v2" "mgmt" {
 
   provisioner "local-exec" {
     command = <<EOF
-      echo net_id_mgmt: ${openstack_networking_network_v2.mgmt.id} >> ../deploy_vars
+      echo net_id_mgmt: ${openstack_networking_network_v2.mgmt.id} >> ../terraform-vars.yml
     EOF
   }
 }
@@ -109,7 +109,7 @@ resource "openstack_networking_router_v2" "bosh_router" {
 
   provisioner "local-exec" {
     command = <<EOF
-      echo bosh_router: ${openstack_networking_router_v2.bosh_router.id} >> ../deploy_vars
+      echo bosh_router: ${openstack_networking_router_v2.bosh_router.id} >> ../terraform-vars.yml
     EOF
   }
 }
@@ -243,16 +243,6 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_25555" {
   security_group_id = "${openstack_networking_secgroup_v2.secgroup.id}"
 }
 
-# floating ips
-resource "openstack_networking_floatingip_v2" "cf_haproxy" {
-  region = "${var.region_name}"
-  pool   = "${var.ext_net_name}"
-}
-
 output "default_key_name" {
   value = "${openstack_compute_keypair_v2.bosh.name}"
-}
-
-output "cf_haproxy_external_ip" {
-  value = "${openstack_networking_floatingip_v2.cf_haproxy.address}"
 }
