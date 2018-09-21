@@ -332,6 +332,17 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_9093" {
   security_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
 }
 
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_15672" {
+  region = "${var.region_name}"
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol = "tcp"
+  port_range_min = 15672
+  port_range_max = 15672
+  remote_ip_prefix = "0.0.0.0/0"
+  security_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
+}
+
 resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_27017" {
   region = "${var.region_name}"
   direction = "ingress"
