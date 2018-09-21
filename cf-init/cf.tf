@@ -140,6 +140,7 @@ resource "openstack_networking_subnet_v2" "rmq__subnet" {
   gateway_ip       = "10.10.0.1"
   enable_dhcp      = "true"
   dns_nameservers  = "${var.dns_nameservers}"
+}
 
 resource "openstack_networking_secgroup_v2" "wise_sec_group" {
   region      = "${var.region_name}"
