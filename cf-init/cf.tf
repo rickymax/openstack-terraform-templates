@@ -95,8 +95,8 @@ resource "openstack_networking_subnet_v2" "db__subnet" {
   ip_version       = 4
   name             = "db__subnet"
   allocation_pools = {
-    start = "10.100.0.10"
-    end   = "10.100.0.100"
+    start = "10.100.0.2"
+    end   = "10.100.255.254"
   }
   gateway_ip       = "10.100.0.1"
   enable_dhcp      = "true"
@@ -116,8 +116,8 @@ resource "openstack_networking_subnet_v2" "rmq__subnet" {
   ip_version       = 4
   name             = "rabbitmq__subnet"
   allocation_pools = {
-    start = "10.10.0.10"
-    end   = "10.10.0.100"
+    start = "10.10.0.2"
+    end   = "10.10.255.254"
   }
   gateway_ip       = "10.10.0.1"
   enable_dhcp      = "true"
