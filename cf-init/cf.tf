@@ -158,7 +158,6 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_icmp" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol = "icmp"
-  remote_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
   security_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
   region = "${var.region_name}"
 }
