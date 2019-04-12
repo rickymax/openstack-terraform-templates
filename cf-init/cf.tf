@@ -2,7 +2,7 @@ provider "openstack" {
   auth_url    = "${var.auth_url}"
   user_name   = "${var.user_name}"
   password    = "${var.password}"
-  tenant_name = "${var.project_name}"
+  tenant_name = "${var.tenant_name}"
   domain_name = "${var.domain_name}"
   insecure    = "${var.insecure}"
   cacert_file = "${var.cacert_file}"
@@ -24,7 +24,7 @@ variable "password" {
   description = "OpenStack user password"
 }
 
-variable "project_name" {
+variable "tenant_name" {
   description = "OpenStack project/tenant name"
 }
 
@@ -45,6 +45,7 @@ variable "region_name" {
 variable "dns_nameservers" {
   type    = "list"
   description = "DNS server IPs"
+  default = ["8.8.8.8", "8.8.4.4"]
 }
 
 variable "availability_zones" {

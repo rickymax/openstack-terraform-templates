@@ -1,0 +1,26 @@
+auth_url = "<auth_url>"
+domain_name = "<domain>"
+user_name = "<user>"
+password = "<password>"
+tenant_name = "<tenant-name>"
+region_name = "<region-name>"
+
+availability_zones = ["<az-1>","<az-2>","<az-3>"]
+
+ext_net_name = "<external-network-name>"
+ext_net_id = "<external-network-id>"
+
+use_fuel_deploy = "<true-or-false>" #default is true
+
+# the OpenStack router id which can be used to access the BOSH network
+bosh_router_id = "<bosh-router-id>"
+
+# in case Openstack has its own DNS servers
+# dns_nameservers = ["<dns-server-1>","<dns-server-2>"]
+
+# Disambiguate security groups with this suffix
+# security_group_suffix = "<security-group-suffix>"
+
+# in case of self signed certificate select one of the following options
+# cacert_file = "<path-to-certificate>"
+# insecure = "true"

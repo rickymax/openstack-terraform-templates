@@ -60,13 +60,10 @@ variable "ext_net_id" {
   description = "OpenStack external network id to create router interface port"
 }
 
-variable "availability_zone" {
-  description = "OpenStack availability zone name"
-}
-
 variable "dns_nameservers" {
-  description = "Comma-separated list of DNS server IPs"
-  default = "8.8.8.8"
+  type    = "list"
+  description = "DNS server IPs"
+  default = ["8.8.8.8", "8.8.4.4"]
 }
 
 # networks
@@ -96,7 +93,7 @@ resource "openstack_networking_subnet_v2" "mgmt__subnet" {
   }
   gateway_ip       = "10.0.0.1"
   enable_dhcp      = "true"
-  dns_nameservers  = ["${compact(split(",",var.dns_nameservers))}"]
+  dns_nameservers = "${var.dns_nameservers}"
 }
 
 # router
@@ -130,7 +127,7 @@ resource "openstack_networking_router_interface_v2" "bosh_port" {
 #}
 #
 #output "net_dns" {
-#  value = "[${join(",", openstack_networking_subnet_v2.mgmt__subnet.dns_nameservers)}]"
+#  value = "${openstack_networking_subnet_v2.mgmt__subnet.dns_nameservers}"
 #}
 #
 #output "net_id_mgmt" {
