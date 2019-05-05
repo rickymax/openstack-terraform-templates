@@ -522,6 +522,8 @@ resource "openstack_networking_floatingip_v2" "rabbitmq_haproxy_public_ip" {
   region = "${var.region_name}"
   pool   = "${var.ext_net_name}"
 
+  depends_on = ["openstack_networking_floatingip_v2.cf_haproxy_public_ip"]
+
   provisioner "local-exec" {
     command = <<EOF
       echo rabbitmq_haproxy_public_ip: ${openstack_networking_floatingip_v2.rabbitmq_haproxy_public_ip.address} >> ../terraform-vars.yml
@@ -532,6 +534,8 @@ resource "openstack_networking_floatingip_v2" "rabbitmq_haproxy_public_ip" {
 resource "openstack_networking_floatingip_v2" "prometheus_nginx_public_ip" {
   region = "${var.region_name}"
   pool   = "${var.ext_net_name}"
+
+  depends_on = ["openstack_networking_floatingip_v2.rabbitmq_haproxy_public_ip"]
 
   provisioner "local-exec" {
     command = <<EOF
