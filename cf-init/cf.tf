@@ -403,6 +403,17 @@ resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_8888" {
   security_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
 }
 
+resource "openstack_networking_secgroup_rule_v2" "secgroup_rule_tcp_2222" {
+  region = "${var.region_name}"
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol = "tcp"
+  port_range_min = 2222
+  port_range_max = 2222
+  remote_ip_prefix = "0.0.0.0/0"
+  security_group_id = "${openstack_networking_secgroup_v2.wise_sec_group.id}"
+}
+
 resource "openstack_networking_router_interface_v2" "cf_router_interface" {
   count = "${length(var.availability_zones)}"
   router_id = "${var.bosh_router_id}"
