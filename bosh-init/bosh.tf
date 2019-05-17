@@ -53,6 +53,10 @@ variable "use_fuel_deploy" {
   default = "true"
 }
 
+variable "bosh_router_id" {
+  description = "ID of the router, which has an interface to the BOSH network"
+}
+
 #####
 
 # input variables
@@ -76,6 +80,7 @@ resource "openstack_networking_network_v2" "mgmt" {
   provisioner "local-exec" {
     command = <<EOF
       echo net_id_mgmt: ${openstack_networking_network_v2.mgmt.id} >> ../terraform-vars.yml
+      echo net_id_mgmt: ${openstack_networking_network_v2.mgmt.id} >> /opt/spacex/playbooks/group_vars/all.yml
     EOF
   }
 }
@@ -97,25 +102,31 @@ resource "openstack_networking_subnet_v2" "mgmt__subnet" {
 }
 
 # router
-resource "openstack_networking_router_v2" "bosh_router" {
-  count = "${var.use_fuel_deploy == "true" ? 0 : 1}"
-  region           = "${var.region_name}"
-  name             = "bosh-router"
-  admin_state_up   = "true"
-  external_network_id = "${var.ext_net_id}"
+#resource "openstack_networking_router_v2" "bosh_router" {
+#  count = "${var.use_fuel_deploy == "true" ? 0 : 1}"
+#  region           = "${var.region_name}"
+#  name             = "bosh-router"
+#  admin_state_up   = "true"
+#  external_network_id = "${var.ext_net_id}"
+#
+#  provisioner "local-exec" {
+#    command = <<EOF
+#      echo bosh_router: ${openstack_networking_router_v2.bosh_router.id} >> ../terraform-vars.yml
+#    EOF
+#  }
+#}
 
-  provisioner "local-exec" {
-    command = <<EOF
-      echo bosh_router: ${openstack_networking_router_v2.bosh_router.id} >> ../terraform-vars.yml
-    EOF
-  }
-}
+#resource "openstack_networking_router_interface_v2" "bosh_port" {
+#  count = "${var.use_fuel_deploy == "true" ? 0 : 1}"
+#  region    = "${var.region_name}"
+#  router_id = "${openstack_networking_router_v2.bosh_router.id}"
+#  subnet_id = "${openstack_networking_subnet_v2.mgmt__subnet.id}"
+#}
 
-resource "openstack_networking_router_interface_v2" "bosh_port" {
-  count = "${var.use_fuel_deploy == "true" ? 0 : 1}"
-  region    = "${var.region_name}"
-  router_id = "${openstack_networking_router_v2.bosh_router.id}"
+resource "openstack_networking_router_interface_v2" "db_router_interface" {
+  router_id = "${var.bosh_router_id}"
   subnet_id = "${openstack_networking_subnet_v2.mgmt__subnet.id}"
+  region = "${var.region_name}"
 }
 
 #output "internal_cidr" {
